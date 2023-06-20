@@ -49,7 +49,30 @@ function createTodoElement(todo) {
     });
   }
 
+  // add click event for edit button
+  const editButton = todoElement.querySelector('button.edit');
+  if (editButton) {
+    editButton.addEventListener('click', () => {
+      // TODO: latest todo data - get from local storage
+      //populate data to todo form
+      populateTodoForm(todo);
+    });
+  }
+
   return todoElement;
+}
+
+function populateTodoForm(todo) {
+  // query todo form
+  // dataset.id = todo.id
+  const todoForm = document.getElementById('todoFormId');
+  if (todoForm) todoForm.dataset.id = todo.id;
+
+  // set values for form controls
+  // set todoText input
+  const todoInput = document.getElementById('todoText');
+  if (!todoInput) return;
+  todoInput.value = todo.title;
 }
 
 function renderTodoList(todoList, ulElementId) {
