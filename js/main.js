@@ -1,11 +1,18 @@
 function createTodoElement(todo) {
   if (!todo) return null;
 
-  const liElement = document.createElement('li');
-  liElement.textContent = todo.title;
-  liElement.dataset.id = todo.id;
+  // find template
+  // clone li element
+  // update content where needed
+  const todoTemplate = document.getElementById('todoTemplate');
+  if (!todoTemplate) return;
+  const todoElement = todoTemplate.content.firstElementChild.cloneNode(true);
+  todoElement.dataset.id = todo.id;
 
-  return liElement;
+  const titleElement = todoElement.querySelector('.todo__title');
+  if (titleElement) titleElement.textContent = todo.title;
+
+  return todoElement;
 }
 
 function renderTodoList(todoList, ulElementId) {
