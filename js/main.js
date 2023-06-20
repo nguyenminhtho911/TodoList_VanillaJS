@@ -54,8 +54,14 @@ function createTodoElement(todo) {
   if (editButton) {
     editButton.addEventListener('click', () => {
       // TODO: latest todo data - get from local storage
+      // need to get todo from local storage
+      // as todo data can be outdated
+      const todoList = getTodoList();
+      const latestTodo = todoList.find((x) => x.id === todo.id);
+      if (!latestTodo) return;
+
       //populate data to todo form
-      populateTodoForm(todo);
+      populateTodoForm(latestTodo);
     });
   }
 
