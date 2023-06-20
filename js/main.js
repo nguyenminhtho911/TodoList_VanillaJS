@@ -39,6 +39,12 @@ function createTodoElement(todo) {
   const removeButton = todoElement.querySelector('button.remove');
   if (removeButton) {
     removeButton.addEventListener('click', () => {
+      // save to local storange
+      const todoList = getTodoList();
+      const newTodoList = todoList.filter((x) => x.id !== todo.id);
+      localStorage.setItem('todo_list', JSON.stringify(newTodoList));
+
+      // remove from DOM
       todoElement.remove();
     });
   }
@@ -61,13 +67,22 @@ function renderTodoList(todoList, ulElementId) {
   }
 }
 
+function getTodoList() {
+  try {
+    return JSON.parse(localStorage.getItem('todo_list'));
+  } catch {
+    return [];
+  }
+}
+
 // main
 (() => {
-  const todoList = [
-    { id: 1, title: 'Learn Javascript', status: 'pending' },
-    { id: 2, title: 'Learn ReactJS', status: 'completed' },
-    { id: 3, title: 'Learn NextJS', status: 'pending' },
-  ];
+  //const todoList = [
+  //  { id: 1, title: 'Learn Javascript', status: 'pending' },
+  //  { id: 2, title: 'Learn ReactJS', status: 'completed' },
+  //  { id: 3, title: 'Learn NextJS', status: 'pending' },
+  //];
 
+  const todoList = getTodoList();
   renderTodoList(todoList, 'todoList');
 })();
