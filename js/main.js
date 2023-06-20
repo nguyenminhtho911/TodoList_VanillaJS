@@ -32,6 +32,17 @@ function createTodoElement(todo) {
       const newAlerClass = currentStatus === 'pending' ? 'alert-success' : 'alert-secondary';
       divElement.classList.remove('alert-success', 'alert-secondary');
       divElement.classList.add(newAlerClass);
+
+      // find todo selected from storage
+      const todoList = getTodoList();
+      const index = todoList.findIndex((x) => x.id.toString() === todoElement.dataset.id);
+      if (index < 0) return;
+
+      // update status
+      todoList[index].status = todoElement.dataset.status;
+
+      // save
+      localStorage.setItem('todo_list', JSON.stringify(todoList));
     });
   }
 
