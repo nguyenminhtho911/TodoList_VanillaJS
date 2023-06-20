@@ -75,6 +75,36 @@ function getTodoList() {
   }
 }
 
+function handleTodoFormSubmit(event) {
+  event.preventDefault();
+
+  // get form values
+  // validate form values
+  const todoInput = document.getElementById('todoText');
+  if (!todoInput) return;
+
+  const newTodo = {
+    id: Date.now(),
+    title: todoInput.value,
+    status: 'pending',
+  };
+
+  // save
+  const todoList = getTodoList();
+  todoList.push(newTodo);
+  localStorage.setItem('todo_list', JSON.stringify(todoList));
+
+  // apply DOM changes
+  const newLiElement = createTodoElement(newTodo);
+  const ulElement = document.getElementById('todoList');
+  if (!ulElement) return;
+  ulElement.appendChild(newLiElement);
+
+  // reset form
+  const todoForm = document.getElementById('todoFormId');
+  if (todoForm) todoForm.reset();
+}
+
 // main
 (() => {
   //const todoList = [
@@ -85,4 +115,10 @@ function getTodoList() {
 
   const todoList = getTodoList();
   renderTodoList(todoList, 'todoList');
+
+  // register submit event for todo form
+  const todoForm = document.getElementById('todoFormId');
+  if (todoForm) {
+    todoForm.addEventListener('submit', handleTodoFormSubmit);
+  }
 })();
