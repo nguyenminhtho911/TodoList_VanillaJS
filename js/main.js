@@ -21,6 +21,28 @@ function createTodoElement(todo) {
   const titleElement = todoElement.querySelector('.todo__title');
   if (titleElement) titleElement.textContent = todo.title;
 
+  // attach events for buttons
+  // add click event for mask-as-done button
+  const markAsDoneButton = todoElement.querySelector('button.mark-as-done');
+  if (markAsDoneButton) {
+    markAsDoneButton.addEventListener('click', () => {
+      const currentStatus = todoElement.dataset.status;
+      todoElement.dataset.status = currentStatus === 'pending' ? 'completed' : 'pending';
+
+      const newAlerClass = currentStatus === 'pending' ? 'alert-success' : 'alert-secondary';
+      divElement.classList.remove('alert-success', 'alert-secondary');
+      divElement.classList.add(newAlerClass);
+    });
+  }
+
+  // add click event for mask-as-done button
+  const removeButton = todoElement.querySelector('button.remove');
+  if (removeButton) {
+    removeButton.addEventListener('click', () => {
+      todoElement.remove();
+    });
+  }
+
   return todoElement;
 }
 
